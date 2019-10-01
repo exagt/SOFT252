@@ -22,7 +22,7 @@ public class MyHeight extends javax.swing.JFrame {
         double inches;
         double feet;
         
-        inches = cm * 2.54;
+        inches = cm / 2.54;
         feet = inches % 12;
         inches %= 12;
         txtFtInch.setText("" + feet + " feet, " + inches + " inches.");
