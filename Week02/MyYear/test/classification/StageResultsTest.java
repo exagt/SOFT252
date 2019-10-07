@@ -113,9 +113,12 @@ public class StageResultsTest {
         double expDoubleResult = 350.0;
         
         // Add the 10, 20 and 40 credit modules to the 'empty' object
+        empty.addModuleMark(70, 50);
+        /*
         empty.addModuleMark(10, 50.0);
         empty.addModuleMark(20, 50.0);
         empty.addModuleMark(40, 50.0);
+        */
         
         // Check that each module mark was added correctly
         assertEquals("credits", expIntResult, empty.getTotalCredits());
@@ -128,6 +131,23 @@ public class StageResultsTest {
     @Test
     public void testCalculateAverageSoFar() {
         //fail("Test not yet implemented");
+        System.out.println("Testing calculateAverageSoFar");
+        
+        // Test with 120 credits at 43.92%
+        full.resetValues();
+        full.addModuleMark(120, 43.92);
+        assertEquals("full @ 43.92%", 43.92, full.calculateAverageSoFar(), 0.0);
+        // Return full back to regular values
+        full.resetValues();
+        full.addModuleMark(120, 50.0);
+        
+        // Test with 60 credits at 64.77%
+        halfFull.resetValues();
+        halfFull.addModuleMark(60, 64.77);
+        assertEquals("halfFull @ 64.77%", 64.77, halfFull.calculateAverageSoFar(), 0.0);
+        // Return halfFull back to regular values
+        halfFull.resetValues();
+        halfFull.addModuleMark(60, 50);
     }
 
     @Test
