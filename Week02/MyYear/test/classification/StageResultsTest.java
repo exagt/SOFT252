@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  * @author ehughes2
  */
 public class StageResultsTest {
-    
+    private StageResults empty;     // will have no credits and no marks
+    private StageResults full;      // will have 120 credits and marks
+    private StageResults halfFull;  // will have 60 credits and some marks
+            
     public StageResultsTest() {
     }
     
@@ -31,6 +34,18 @@ public class StageResultsTest {
     
     @Before
     public void setUp() {
+        // empty - object that starts with default values
+        empty = new StageResults();
+        
+        // full - object with 120 credits worth of marks but
+        // no initial stage2Average
+        full = new StageResults();
+        full.addModuleMark(120, 50.0);
+        
+        // halfFull - object with 60 credits worth of marks and
+        // no initial stage2Average
+        halfFull = new StageResults();
+        halfFull.addModuleMark(60, 50.0);
     }
     
     @After
