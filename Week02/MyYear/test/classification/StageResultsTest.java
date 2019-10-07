@@ -105,12 +105,29 @@ public class StageResultsTest {
 
     @Test
     public void testAddModuleMark() {
-        fail("Test not yet implemented");
+        //fail("Test not yet implemented");
+        System.out.println("Testing addModuleMark");
+        
+        // Set expected results
+        int expIntResult = 70;
+        double expDoubleResult = 350.0;
+        
+        // Add the 10, 20 and 40 credit modules to the 'empty' object
+        empty.addModuleMark(10, 50.0);
+        empty.addModuleMark(20, 50.0);
+        empty.addModuleMark(40, 50.0);
+        
+        // Check that each module mark was added correctly
+        assertEquals("credits", expIntResult, empty.getTotalCredits());
+        assertEquals("total", expDoubleResult, empty.getTotalMarks(), 0.0);
+        
+        // Set the state of the 'empty' object to zeroes
+        empty.resetValues();
     }
 
     @Test
     public void testCalculateAverageSoFar() {
-        fail("Test not yet implemented");
+        //fail("Test not yet implemented");
     }
 
     @Test
