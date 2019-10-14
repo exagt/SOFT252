@@ -148,11 +148,57 @@ public class StageResultsTest {
         // Return halfFull back to regular values
         halfFull.resetValues();
         halfFull.addModuleMark(60, 50);
+        
+        // Test with 120 credits at 100%
+        full.resetValues();
+        full.addModuleMark(120, 100);
+        assertEquals("full @ 100%", 100, full.calculateAverageSoFar(), 0.0);
+        // Return full back to regular values
+        full.resetValues();
+        full.addModuleMark(120, 50);
     }
 
     @Test
     public void testPredictClass() {
-        fail("Test not yet implemented");
+        //fail("Test not yet implemented");
+        System.out.println("Testing predictClass");
+        
+        // Array to hold stage 3 marks
+        double[] marks = {0.00, 50.00, 50.00, 100.00, 39.99, 40.0, 49.99, 50.00,
+            59.99, 60.00, 69.99, 70.0, 99.99, 35.67, 44.22, 56.39, 64.00, 
+            76.80};
+        // Array of corresponding classifications with no stage 2 marks
+        String[] expResult1 = {"No marks!", "Lower 2nd", "Lower 2nd", "1st", 
+            "FAIL", "3rd", "3rd", "Lower 2nd", "Lower 2nd", "Upper 2nd", 
+            "Upper 2nd", "1st", "1st", "FAIL", "3rd", "Lower 2nd", "Upper 2nd",
+            "1st"};
+        
+        // Run tests with no stage 2 average
+        for (int count = 0; count < marks.length; count++) {
+            full.resetValues();
+            full.addModuleMark(120, marks[count]);
+            assertEquals("120 credits, mark = " + marks[count], 
+                    expResult1[count], full.predictClass());
+        }
+    }
+    
+    @Test
+    public void testFullOperation() {
+        int[] credits = {10, 10, 10, 20, 20, 40, 10};
+        double[] marks = {60.6, 44.45, 80.0, 56.99, 62.3, 68.4, 59.1};
+        double stage2 = 61.2;
+        
+        StageResults finalTest = new StageResults();
+        
+        // Add in the module marks and set the stage 2 average
+        for (int count = 0; count < credits.length; count++) {
+            finalTest.addModuleMark(credits[count], marks[count]);
+        }
+        finalTest.setStage2Average(stage2);
+        
+        // Test the results
+        assertEquals("stage 3 average", 63.03, finalTest.calculateAverageSoFar(), 0.0);
+        assertEquals("predicated class ", "Upper 2nd", finalTest.predictClass());
     }
     
 }
