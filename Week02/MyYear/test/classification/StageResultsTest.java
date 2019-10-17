@@ -172,6 +172,15 @@ public class StageResultsTest {
             "FAIL", "3rd", "3rd", "Lower 2nd", "Lower 2nd", "Upper 2nd", 
             "Upper 2nd", "1st", "1st", "FAIL", "3rd", "Lower 2nd", "Upper 2nd",
             "1st"};
+        // Array of Stage 2 average marks
+        double[] stage2 = {0.00, 50.00, 56.77, 70.00, 56.00, 49.53, 52.78, 
+        64.89, 47.82, 89.22, 70.00, 48.56, 100.00, 38.67, 56.29, 77.00, 65.00,
+        83.00};
+        // Array of corresponding classifications with stage 2 marks
+        String[] expResult2 = {"No marks!", "Lower 2nd", "Lower 2nd", "1st", 
+        "3rd", "3rd", "Lower 2nd", "Lower 2nd", "Lower 2nd", "Upper 2nd", 
+        "Upper 2nd", "Upper 2nd", "1st", "FAIL", "3rd", "Upper 2nd", 
+        "Upper 2nd", "1st"};
         
         // Run tests with no stage 2 average
         for (int count = 0; count < marks.length; count++) {
@@ -180,6 +189,27 @@ public class StageResultsTest {
             assertEquals("120 credits, mark = " + marks[count], 
                     expResult1[count], full.predictClass());
         }
+        
+        // Run tests with stage 2 average
+        for (int count = 0; count < marks.length; count++) {
+            full.resetValues();
+            full.addModuleMark(120, marks[count]);
+            full.setStage2Average(stage2[count]);
+            assertEquals("120 credits, mark = " + marks[count] + " stage 2 = " +
+                    stage2[count], expResult2[count], full.predictClass());
+        }
+        
+        // Reset the 'full' object
+        full.resetValues();
+        full.addModuleMark(120, 50.00);
+        
+        // Final check to make sure no prediction is returned if <120 credits
+        assertEquals("No prediction for 60 credits.", "Insufficient credits",
+                halfFull.predictClass());
+        assertEquals("No prediction for 0 credits.", "Insufficient credits",
+                empty.predictClass());
+        
+        //fuck knows what's wrong with this test method
     }
     
     @Test
